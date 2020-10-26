@@ -14,12 +14,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-uint8_t Xrooms;
-uint8_t Yrooms;
-char buffer[10];
-os_GetStringInput(char * "Map X Size: ", buffer, sizeof(buffer));
-Xrooms = 20;
-Yrooms = 20;
-uint16_t mapL[Xrooms * 20][Yrooms * 15];
+void start(void);
 
-return;
+void start(void) {
+	uint8_t Xrooms;
+	uint8_t Yrooms;
+	uint8_t Xsize;
+	uint8_t Ysize;
+	uint16_t mapL;
+	uint16_t mapR;
+	char* string = "Map X Size: ";
+	char buffer[10];
+	//os_GetStringInput(char* "Map X Size: ", buffer, size_t 10);
+	os_GetStringInput(string, buffer, _sizeof(buffer));
+	Xrooms = 20;
+	Yrooms = 20;
+	Xsize = Xrooms * 20;
+	Ysize = Yrooms * 15;
+	uint mapL[Xsize][Ysize];
+
+	return;
+}
