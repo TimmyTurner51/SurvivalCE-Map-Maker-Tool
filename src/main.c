@@ -14,13 +14,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "gfx/gfx.h"
 void main(void);
 void createVars(void);
 void LoadMapChunk(void);
-uint16_t LoadMapX;
-uint16_t LoadMapY;
-uint16_t xa;
-uint16_t ya;
 
 
 
@@ -29,31 +26,31 @@ void main(void) {
 	uint16_t CursorX;
 	uint16_t CursorY;
 	char screenMap[20*15];
-	char wholeMap[((20*20)*(15*20))];
-	int LoadMapX = 1;
 	uint16_t x;
 	uint16_t y;
-	uint16_t OldLoadX;
-	OldLoadX = LoadMapX;
-	/* Load the map screen data from the whole map */
+	uint16_t xa;
+	gfx_sprite_t* sprites[12] = {dirt, grass, stone, wood, wood2, water, lava, netherrack, fireball, traptile1, traptile2, sailcloth};
 	for (y = 1; y < 15; y++) {
 		for (x = 1; x < 20; x++) {
-			screenMap[x] = wholeMap[LoadMapX];
-			LoadMapX = LoadMapX + 1;
+			screenMap[x * y] = 0;
 		}
-		LoadMapX = LoadMapX + ((20*20) - 20);
 	}
-	LoadMapX = OldLoadX;
 	/* Draw the screen */
+	gfx_Begin();
+	gfx_SetPalette(mypalette, sizeof_mypalette, 0);
 	gfx_FillScreen(255);
-	xa = 1;
+	xa = 0;
 	for (y = 1; y < 15; y++) {
 		for (x = 1; x < 20; x++) {
-
+			if (screenMap[xa] != 0) gfx_Sprite(sprites[screenMap[xa]], x * 16, y * 16);
 			xa = xa + 1;
 		}
 	}
 
+		while (!kb_Data[1] & kb_Clear) {
+
+	}
+		gfx_End();
 }
 
 
