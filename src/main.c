@@ -16,14 +16,47 @@
 #include <string.h>
 void main(void);
 void createVars(void);
+void LoadMapChunk(void);
+uint16_t LoadMapX;
+uint16_t LoadMapY;
+uint16_t xa;
+uint16_t ya;
+
+
 
 void main(void) {
+
+	uint16_t CursorX;
+	uint16_t CursorY;
 	char screenMap[20*15];
-	char wholeMap[((10*20)*(15*20))];
+	char wholeMap[((20*20)*(15*20))];
+	int LoadMapX = 1;
+	uint16_t x;
+	uint16_t y;
+	uint16_t OldLoadX;
+	OldLoadX = LoadMapX;
+	/* Load the map screen data from the whole map */
+	for (y = 1; y < 15; y++) {
+		for (x = 1; x < 20; x++) {
+			screenMap[x] = wholeMap[LoadMapX];
+			LoadMapX = LoadMapX + 1;
+		}
+		LoadMapX = LoadMapX + ((20*20) - 20);
+	}
+	LoadMapX = OldLoadX;
+	/* Draw the screen */
+	gfx_FillScreen(255);
+	xa = 1;
+	for (y = 1; y < 15; y++) {
+		for (x = 1; x < 20; x++) {
 
+			xa = xa + 1;
+		}
+	}
 
-	return;
 }
+
+
 
 /*
 
