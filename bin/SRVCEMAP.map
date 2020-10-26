@@ -1,29 +1,37 @@
 Segment  Base   Top    High   Length
 -------- ------ ------ ------ -------
 icon     D1A882 D1A9A3           121h
-launcher D1A9A3 D1A9A3             0h
-libs     D1A9A3 D1A9A3             0h
-startup  D1A9A3 D1A9E2            3Fh
-cleanup  D1A9E2 D1A9F6            14h
-exit     D1A9F6 D1A9FC             6h
-code     D1A9FC D1AA21            25h
-data     D1AA21 D1AA21             0h
-strsect  D1AA21 D1AA21             0h
-text     D1AA21 D1AA21             0h
-bss      D031F6 D031F6 D13FD6      0h
+launcher D1A9A3 D1A9FB            58h
+libs     D1A9FB D1AA12            17h
+startup  D1AA12 D1AA51            3Fh
+cleanup  D1AA51 D1AA65            14h
+exit     D1AA65 D1AA6B             6h
+code     D1AA6B D1AB8C           121h
+data     D1AB8C D1ABAE            22h
+strsect  D1ABAE D1ABAE             0h
+text     D1ABAE D1ABAE             0h
+bss      D031F6 D031FE D13FD6      8h
 header   D1A87F D1A882             3h
 
 Label                       Value
 -------------------------   ------
-_os_DisableHomeTextBuffer = D1A9FC
-_os_EnableHomeTextBuffer  = D1AA0E
+_os_DisableHomeTextBuffer = D1AA6B
+_os_EnableHomeTextBuffer  = D1AA7D
+__frameset                = D1AA8F
+__stoiu                   = 000264
+__findlibload             = D1A9A3
 __program_icon            = D1A887
 __program_description     = D1A989
-__ccleanup                = D1A9E2
+__ccleanup                = D1AA51
 _errno                    = D008DC
 _init                     = D1A882
-_exit                     = D1A9F8
-__exit                    = D1A9D1
-__exitsp                  = D1A9D1
-__errsp                   = D1A9D1
-_main                     = D1AA20
+_exit                     = D1AA67
+__exit                    = D1AA40
+__exitsp                  = D1AA40
+__errsp                   = D1AA40
+_main                     = D1AA9D
+_ya                       = D031FC
+_xa                       = D031FA
+_LoadMapY                 = D031F8
+_LoadMapX                 = D031F6
+_gfx_FillScreen           = D1AA0E
