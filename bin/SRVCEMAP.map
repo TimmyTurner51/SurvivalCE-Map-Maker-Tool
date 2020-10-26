@@ -2,36 +2,51 @@ Segment  Base   Top    High   Length
 -------- ------ ------ ------ -------
 icon     D1A882 D1A9A3           121h
 launcher D1A9A3 D1A9FB            58h
-libs     D1A9FB D1AA12            17h
-startup  D1AA12 D1AA51            3Fh
-cleanup  D1AA51 D1AA65            14h
-exit     D1AA65 D1AA6B             6h
-code     D1AA6B D1AB8C           121h
-data     D1AB8C D1ABAE            22h
-strsect  D1ABAE D1ABAE             0h
-text     D1ABAE D1ABAE             0h
-bss      D031F6 D031FE D13FD6      8h
+libs     D1A9FB D1AA22            27h
+startup  D1AA22 D1AA61            3Fh
+cleanup  D1AA61 D1AA75            14h
+exit     D1AA75 D1AA7B             6h
+code     D1AA7B D1AC22           1A7h
+data     D1AC22 D1D85C          2C3Ah
+strsect  D1D85C D1D85C             0h
+text     D1D85C D1D880            24h
+bss      D031F6 D031F6 D13FD6      0h
 header   D1A87F D1A882             3h
 
 Label                       Value
 -------------------------   ------
-_os_DisableHomeTextBuffer = D1AA6B
-_os_EnableHomeTextBuffer  = D1AA7D
-__frameset                = D1AA8F
+_os_DisableHomeTextBuffer = D1AA7B
+_os_EnableHomeTextBuffer  = D1AA8D
+__frameset                = D1AA9F
+__imuls                   = 000154
 __stoiu                   = 000264
+__icmpzero                = 000138
 __findlibload             = D1A9A3
 __program_icon            = D1A887
 __program_description     = D1A989
-__ccleanup                = D1AA51
+__ccleanup                = D1AA61
 _errno                    = D008DC
 _init                     = D1A882
-_exit                     = D1AA67
-__exit                    = D1AA40
-__exitsp                  = D1AA40
-__errsp                   = D1AA40
-_main                     = D1AA9D
-_ya                       = D031FC
-_xa                       = D031FA
-_LoadMapY                 = D031F8
-_LoadMapX                 = D031F6
-_gfx_FillScreen           = D1AA0E
+_exit                     = D1AA77
+__exit                    = D1AA50
+__exitsp                  = D1AA50
+__errsp                   = D1AA50
+_dirt_data                = D1AC44
+_fireball_data            = D1AD46
+_grass_data               = D1AE48
+_lava_data                = D1AF4A
+_mypalette                = D1B04C
+_netherrack_data          = D1B24C
+_sailcloth_data           = D1B34E
+_stone_data               = D1C350
+_traptile1_data           = D1C452
+_traptile2_data           = D1C554
+_water_data               = D1C656
+_wood_data                = D1C758
+_wood2_data               = D1C85A
+_main                     = D1AAAD
+_gfx_Begin                = D1AA0E
+_gfx_End                  = D1AA12
+_gfx_SetPalette           = D1AA16
+_gfx_FillScreen           = D1AA1A
+_gfx_Sprite               = D1AA1E
