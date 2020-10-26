@@ -14,24 +14,58 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-void start(void);
+void main(void);
+void createVars(void);
 
-void start(void) {
+void main(void) {
+	char screenMap[20*15];
+	char wholeMap[((10*20)*(15*20))];
+
+
+	return;
+}
+
+/*
+
+void test(void) {
+
 	uint8_t Xrooms;
 	uint8_t Yrooms;
 	uint8_t Xsize;
 	uint8_t Ysize;
 	uint16_t mapL;
 	uint16_t mapR;
-	char* string = "Map X Size: ";
-	char buffer[10];
-	//os_GetStringInput(char* "Map X Size: ", buffer, size_t 10);
-	os_GetStringInput(string, buffer, _sizeof(buffer));
+	uint16_t XsizeL;
+	uint16_t XsizeR;
+	const char* chars = "\0\0\0\0\0\0\0\0\0\0\"WRMH\0\0?[VQLG\0\0:ZUPKFC\0 YTOJEB\0\0XSNIDA\0\0\0\0\0\0\0\0";
+	uint8_t key, i = 0;
+	char buffer[50];
+	gfx_Begin();
+	while ((key = os_GetCSC()) != sk_Enter) {
+		if (chars[key]) {
+			buffer[i++] = chars[key];
+		}
+	}
+	gfx_PrintStringXY(buffer, 1, 1);
 	Xrooms = 20;
 	Yrooms = 20;
+	XsizeL = (Xrooms / 2) * 20;
+	XsizeR = (Xrooms - XsizeL) * 20;
 	Xsize = Xrooms * 20;
 	Ysize = Yrooms * 15;
-	uint mapL[Xsize][Ysize];
 
+	delay(1000);
+
+	createVars();
+
+	gfx_End();
 	return;
 }
+
+void createVarsTEST(void) {
+	char mapL[XsizeL];
+
+	return;
+};
+
+*/
