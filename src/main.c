@@ -30,7 +30,7 @@ void main(void) {
 	uint16_t y;
 	uint16_t xa;
 	gfx_sprite_t* sprites[12] = {dirt, grass, stone, wood, wood2, water, lava, netherrack, fireball, traptile1, traptile2, sailcloth};
-	loadVars();
+	createVars();
 	for (y = 1; y < 15; y++) {
 		for (x = 1; x < 20; x++) {
 			screenMap[x * y] = 0;
@@ -56,7 +56,7 @@ void main(void) {
 
 
 /* loading appvars… */
-void loadVars(void) {
+void createVars(void) {
 	typedef struct {
   		char name[15];
    		uint8_t var1;
