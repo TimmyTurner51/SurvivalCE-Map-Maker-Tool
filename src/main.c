@@ -72,8 +72,6 @@ ti_Write(&data, sizeof(data_t), 1, appvar);
 	return;
 }
 
-/*
-
 void input(void) {
 	const char* chars = "\0\0\0\0\0\0\0\0\0\0\"WRMH\0\0?[VQLG\0\0:ZUPKFC\0 YTOJEB\0\0XSNIDA\0\0\0\0\0\0\0\0";
 	uint8_t key, i = 0;
@@ -100,5 +98,3 @@ void input(void) {
 	gfx_End();
 	return;
 }
-
-*/
