@@ -30,6 +30,7 @@ void main(void) {
 	uint16_t y;
 	uint16_t xa;
 	gfx_sprite_t* sprites[12] = {dirt, grass, stone, wood, wood2, water, lava, netherrack, fireball, traptile1, traptile2, sailcloth};
+	loadVars();
 	for (y = 1; y < 15; y++) {
 		for (x = 1; x < 20; x++) {
 			screenMap[x * y] = 0;
@@ -54,19 +55,26 @@ void main(void) {
 }
 
 
+/* loading appvars… */
+void loadVars(void) {
+	typedef struct {
+  		char name[15];
+   		uint8_t var1;
+   		uint8_t var2;
+} data_t;
+data_t data;
+   strcpy(data.name, "My Data");
+	ti_var_t appvar;
+	appvar = ti_Open(“SrvCEss”, “r”);
+	if (!appvar)goto write;
+	write:
+ti_Write(&data, sizeof(data_t), 1, appvar);
+	return;
+}
 
 /*
 
-void test(void) {
-
-	uint8_t Xrooms;
-	uint8_t Yrooms;
-	uint8_t Xsize;
-	uint8_t Ysize;
-	uint16_t mapL;
-	uint16_t mapR;
-	uint16_t XsizeL;
-	uint16_t XsizeR;
+void input(void) {
 	const char* chars = "\0\0\0\0\0\0\0\0\0\0\"WRMH\0\0?[VQLG\0\0:ZUPKFC\0 YTOJEB\0\0XSNIDA\0\0\0\0\0\0\0\0";
 	uint8_t key, i = 0;
 	char buffer[50];
@@ -74,9 +82,10 @@ void test(void) {
 	while ((key = os_GetCSC()) != sk_Enter) {
 		if (chars[key]) {
 			buffer[i++] = chars[key];
+			gfx_PrintStringXY(buffer, 1, 1);
 		}
 	}
-	gfx_PrintStringXY(buffer, 1, 1);
+	
 	Xrooms = 20;
 	Yrooms = 20;
 	XsizeL = (Xrooms / 2) * 20;
@@ -91,11 +100,5 @@ void test(void) {
 	gfx_End();
 	return;
 }
-
-void createVarsTEST(void) {
-	char mapL[XsizeL];
-
-	return;
-};
 
 */
