@@ -6,11 +6,11 @@ libs     D1A9FB D1AA4C            51h
 startup  D1AA4C D1AA8B            3Fh
 cleanup  D1AA8B D1AA9F            14h
 exit     D1AA9F D1AAA5             6h
-code     D1AAA5 D1B0F3           64Eh
-data     D1B0F3 D1DD2D          2C3Ah
-strsect  D1DD2D D1DD92            65h
-text     D1DD92 D1DDDA            48h
-bss      D031F6 D031F6 D13FD6      0h
+code     D1AAA5 D1B0EF           64Ah
+data     D1B0EF D1DD4D          2C5Eh
+strsect  D1DD4D D1DDCA            7Dh
+text     D1DDCA D1DDCA             0h
+bss      D031F6 D03322 D13FD6    12Ch
 header   D1A87F D1A882             3h
 
 Label                       Value
@@ -167,20 +167,20 @@ _exit                     = D1AAA1
 __exit                    = D1AA7A
 __exitsp                  = D1AA7A
 __errsp                   = D1AA7A
-_dirt_data                = D1B115
-_fireball_data            = D1B217
-_grass_data               = D1B319
-_lava_data                = D1B41B
-_mypalette                = D1B51D
-_netherrack_data          = D1B71D
-_sailcloth_data           = D1B81F
-_stone_data               = D1C821
-_traptile1_data           = D1C923
-_traptile2_data           = D1CA25
-_water_data               = D1CB27
-_wood_data                = D1CC29
-_wood2_data               = D1CD2B
-_input                    = D1B07F
+_dirt_data                = D1B111
+_fireball_data            = D1B213
+_grass_data               = D1B315
+_lava_data                = D1B417
+_mypalette                = D1B519
+_netherrack_data          = D1B719
+_sailcloth_data           = D1B81B
+_stone_data               = D1C81D
+_traptile1_data           = D1C91F
+_traptile2_data           = D1CA21
+_water_data               = D1CB23
+_wood_data                = D1CC25
+_wood2_data               = D1CD27
+_input                    = D1B07B
 _createVars               = D1AE95
 _start                    = D1AB43
 _main                     = D1AB20
