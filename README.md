@@ -18,4 +18,6 @@ Arrow keys = Move the Cursor
 
 Future controls:
 
-[y=] =  File Menu
+[y=] = File Menu
+
+[window] = Map Tools Menu
