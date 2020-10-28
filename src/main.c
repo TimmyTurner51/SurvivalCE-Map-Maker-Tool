@@ -39,11 +39,13 @@ void drawScreen();
 	static uint16_t option;
 	static uint8_t appvar;
 	static uint8_t redraw;
+	static uint16_t room;
+	static uint16_t totalRooms;
 
 void main(void) {
-	screen = 1;
 	gfx_Begin();
 	gfx_SetPalette(mypalette, sizeof_mypalette, 0);
+	screen = 1;
 	createVars();
 	start();
 }
@@ -64,7 +66,10 @@ void drawScreen(void) {
 
 void start(void) {
 	uint8_t exit;
+	uint8_t start;
+	uint8_t end;
 	gfx_FillScreen(255);
+	room = 0;
 	CursorX = 0;
 	CursorY = 0;
 	Type = 0;
@@ -72,7 +77,7 @@ void start(void) {
 	exit = 0;
 	redraw = 1;
 	while (exit == 0) {
-	
+		kb_Scan();
 		if (Type == 0) {
 			gfx_SetColor(255);
 			gfx_FillRectangle(x * 16, y * 16, 16, 16);
@@ -108,6 +113,7 @@ void start(void) {
 		if (kb_IsDown(kb_Key2nd)) {
 			delay(100);
 			screenMap[xa] = Type;
+			wholeMap[((totalRooms - 1) * 300) + xa] = Type;
 		}
 		if (kb_IsDown(kb_KeyAlpha)) {
 			delay(160);
@@ -118,8 +124,13 @@ void start(void) {
 			if (kb_IsDown(kb_KeyClear)) {
 				exit = 1;
 				ti_CloseAll();
+				start = ((totalRooms - 1) * 300); 
+				//If you want to copy to the same position in the first array, you can use `memcpy(&screenMap[start], &wholeMap[start], (end - start) * sizeof wholeMap[0]);`
+				for (xb = start; xb < start + 300; xb++) {
+					memcpy(&screenMap[xb], &wholeMap[xb], 1);
+				}
 				appvar = ti_Open("SrvMap00", "w");
-				ti_Write(screenMap, 300, 1, appvar);
+				ti_Write(wholeMap, totalRooms * 300, 1, appvar);
 				ti_SetArchiveStatus(1, appvar);
 				ti_CloseAll();
 				gfx_End();
@@ -134,9 +145,9 @@ void start(void) {
 				redraw = 1;
 				y = 140;
 				i = y;
-				for (OldY = 0; OldY < 240; OldY += 16) {
-					for (OldX = 0; OldX < 320; OldX += 16) {
-						gfx_Sprite(grass, OldX, OldY);
+				for (OldY = 0; OldY < 15; OldY++) {
+					for (OldX = 0; OldX < 20; OldX++) {
+						gfx_Sprite(grass, OldX * 16, OldY * 16);
 					}
 				}
 				for (OldY = 140; OldY < 200; OldY += 20) {
@@ -144,9 +155,9 @@ void start(void) {
 						gfx_Sprite(wood, OldX, OldY);
 					}
 				}
-				gfx_FillScreen(255);
 				while (!kb_IsDown(kb_KeyClear)) {
-					if (redraw == 1) {
+					kb_Scan();
+					if (redraw != 0) {
 						redraw = 0;
 						/* redraw only the one button that needs it */
 						for (xb = 60; xb < 244; xb += 16) {
@@ -163,15 +174,16 @@ void start(void) {
 					i = y;
 					if (kb_IsDown(kb_KeyUp) && y > 140) {
 						delay(150);
+						redraw = 1;
 						y = y - 20;
 					}
 					if (kb_IsDown(kb_KeyDown) && y < 180) {
 						delay(150);
+						redraw = 1;
 						y = y + 20;
 					}
-					if (i != y)                                 redraw = 1;
-					if (kb_IsDown(kb_Key2nd) && (y = 140))        option = 1;
-					if (option != 0)                              return;
+					if (kb_IsDown(kb_Key2nd) && (y = 140)) option = 1;
+		
 				}
 
 			}
@@ -196,7 +208,7 @@ void createVars(void) {
 	if (!appvar) {
 		ti_CloseAll();
 		appvar = ti_Open("SrvMap00", "w");
-		ti_Write(wholeMap, sizeof(wholeMap), 1, appvar);
+		ti_Write(wholeMap, sizeof(wholeMap) + 300, 1, appvar);
 		ti_SetArchiveStatus(1, appvar);
 		ti_CloseAll();
 	}
@@ -205,9 +217,14 @@ void createVars(void) {
 	if (appvar) {
 		ti_CloseAll();
 		appvar = ti_Open("SrvMap00", "r");
-		ti_Read(wholeMap, sizeof(appvar), 1, appvar);
+		ti_Read(wholeMap, ti_GetSize(appvar), 1, appvar);
+		totalRooms = sizeof(wholeMap) / 300;		// we could use sizeof(appvar) instead, but I think sizeof(appvar) is 317, whereas sizeof(wholeMap) is 300, maybe...
+
 		ti_CloseAll();
 		xb = 0;
+		for (x = 0; x < sizeof(wholeMap); x++) {
+			screenMap[x] = wholeMap[x];
+		}
 		gfx_SetColor(255);
 		drawScreen();
 	}
