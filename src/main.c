@@ -29,6 +29,8 @@ void main(void) {
 	gfx_SetPalette(mypalette, sizeof_mypalette, 0);
 	createVars();
 	start();
+	gfx_End();
+	return;
 }
 
 void start(void) {
@@ -112,7 +114,7 @@ void start(void) {
 				}
 			}
 	}
-	gfx_End();
+	
 
 }
 
