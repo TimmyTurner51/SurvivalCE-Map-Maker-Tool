@@ -2,20 +2,20 @@ Segment  Base   Top    High   Length
 -------- ------ ------ ------ -------
 icon     D1A882 D1A9A3           121h
 launcher D1A9A3 D1A9FB            58h
-libs     D1A9FB D1AA4C            51h
-startup  D1AA4C D1AA8B            3Fh
-cleanup  D1AA8B D1AA9F            14h
-exit     D1AA9F D1AAA5             6h
-code     D1AAA5 D1B0EF           64Ah
-data     D1B0EF D1DD4D          2C5Eh
-strsect  D1DD4D D1DDCA            7Dh
-text     D1DDCA D1DDCA             0h
-bss      D031F6 D03322 D13FD6    12Ch
+libs     D1A9FB D1AA50            55h
+startup  D1AA50 D1AA8F            3Fh
+cleanup  D1AA8F D1AAA3            14h
+exit     D1AAA3 D1AAA9             6h
+code     D1AAA9 D1B2A9           800h
+data     D1B2A9 D1DF07          2C5Eh
+strsect  D1DF07 D1DF75            6Eh
+text     D1DF75 D1DF75             0h
+bss      D031F6 D03469 D13FD6    273h
 header   D1A87F D1A882             3h
 
 Label                       Value
 -------------------------   ------
-_delay                    = D1AAA5
+_delay                    = D1AAA9
 _boot_GetBootMajorVer     = 000080
 _boot_GetHardwareVer      = 000084
 _boot_GetBootMinorVer     = 00008C
@@ -151,39 +151,40 @@ _asm_DisableAPD           = 021134
 _asm_EnableAPD            = 021138
 _asm_DrawStatusBar        = 021A3C
 _asm_ArcChk               = 022040
-_os_DisableHomeTextBuffer = D1AAEE
-_os_EnableHomeTextBuffer  = D1AB00
+_os_DisableHomeTextBuffer = D1AAF2
+_os_EnableHomeTextBuffer  = D1AB04
 __scmpzero                = 000204
-__frameset                = D1AB12
+__frameset                = D1AB16
 __stoiu                   = 000264
 __setflag                 = 000218
 __findlibload             = D1A9A3
 __program_icon            = D1A887
 __program_description     = D1A989
-__ccleanup                = D1AA8B
+__ccleanup                = D1AA8F
 _errno                    = D008DC
 _init                     = D1A882
-_exit                     = D1AAA1
-__exit                    = D1AA7A
-__exitsp                  = D1AA7A
-__errsp                   = D1AA7A
-_dirt_data                = D1B111
-_fireball_data            = D1B213
-_grass_data               = D1B315
-_lava_data                = D1B417
-_mypalette                = D1B519
-_netherrack_data          = D1B719
-_sailcloth_data           = D1B81B
-_stone_data               = D1C81D
-_traptile1_data           = D1C91F
-_traptile2_data           = D1CA21
-_water_data               = D1CB23
-_wood_data                = D1CC25
-_wood2_data               = D1CD27
-_input                    = D1B07B
-_createVars               = D1AE95
-_start                    = D1AB43
-_main                     = D1AB20
+_exit                     = D1AAA5
+__exit                    = D1AA7E
+__exitsp                  = D1AA7E
+__errsp                   = D1AA7E
+_dirt_data                = D1B2CB
+_fireball_data            = D1B3CD
+_grass_data               = D1B4CF
+_lava_data                = D1B5D1
+_mypalette                = D1B6D3
+_netherrack_data          = D1B8D3
+_sailcloth_data           = D1B9D5
+_stone_data               = D1C9D7
+_traptile1_data           = D1CAD9
+_traptile2_data           = D1CBDB
+_water_data               = D1CCDD
+_wood_data                = D1CDDF
+_wood2_data               = D1CEE1
+_input                    = D1B235
+_createVars               = D1B174
+_start                    = D1AC42
+_drawScreen               = D1AB4D
+_main                     = D1AB24
 _ti_CloseAll              = D1AA0F
 _ti_Open                  = D1AA13
 _ti_Write                 = D1AA17
@@ -195,5 +196,6 @@ _gfx_SetColor             = D1AA34
 _gfx_SetPalette           = D1AA38
 _gfx_FillScreen           = D1AA3C
 _gfx_PrintStringXY        = D1AA40
-_gfx_FillRectangle        = D1AA44
-_gfx_Sprite               = D1AA48
+_gfx_Rectangle            = D1AA44
+_gfx_FillRectangle        = D1AA48
+_gfx_Sprite               = D1AA4C
