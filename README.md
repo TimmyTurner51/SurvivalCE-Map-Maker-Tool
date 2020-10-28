@@ -6,8 +6,11 @@ Tested on version 5.3.0.0037 and it does work.
 
 Controls:
 Arrow keys = Move the Cursor
+
 [Alpha] = Change the Block Type.
+
 [2nd] = Place the block. Select the regular cursor (small grey rectangle) if you wish to delete/remove a block! 
+
 [clear] = Quit the Editor. (Saves automatically)
 
 Future controls:
