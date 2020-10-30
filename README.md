@@ -16,8 +16,4 @@ Arrow keys = Move the Cursor
 
 [clear] = Quit the Editor. (Saves automatically)
 
-Future controls:
-
-[y=] = File Menu
-
-[window] = Map Tools Menu
+[2], [4], [6], [8] = Move to another room.
