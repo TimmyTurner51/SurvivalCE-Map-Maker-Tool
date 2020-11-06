@@ -17,3 +17,7 @@ Arrow keys = Move the Cursor
 [clear] = Quit the Editor. (Saves automatically)
 
 [2], [4], [6], [8] = Move to another room.
+
+[y=] = <only works when your cursor is on a placed door>  Open a building/house menu, allows you to design a single room for your building.
+
+[stat] = view the list position in the Map (confusing to understand, for Developers)
