@@ -19,10 +19,13 @@ void main(void);
 void createVars(void);
 void input(void);
 void start(void);
-void drawScreen();
+void editor(void);
+void drawScreen(void);
 void addRoom(void);
+void scanForBuildings(void);
 
-	static gfx_sprite_t* sprites[12] = { dirt, grass, stone, wood, wood2, water, lava, netherrack, fireball, traptile1, traptile2, sailcloth };
+
+	static gfx_sprite_t* sprites[16] = { dirt, grass, stone, wood, wood2, water, lava, netherrack, fireball, traptile1, traptile2, sailcloth, door, wall_brick, roof, sword };
 	static char wholeMap[(20 * 14) * (15 * 14)];
 	static uint8_t screen;
 	static uint32_t CursorX;
@@ -42,6 +45,10 @@ void addRoom(void);
 	static uint32_t room;
 	static uint32_t roomX;
 	static uint32_t roomY;
+	static uint24_t TypeB;
+    //buildings[0] = count on screen, buildings[1] = building 1 pos in map data, building[2] = building 2 pos in map data, and so on...
+    static uint24_t buildings[21] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	static uint24_t buildingData[6000] = {0};
 
 
 void main(void) {
@@ -53,6 +60,7 @@ void main(void) {
 	screen = 1;
 	createVars();
 	start();
+	editor();
 }
 
 void drawScreen(void) {
@@ -69,49 +77,78 @@ void drawScreen(void) {
 }
 
 void start(void) {
-	uint8_t exit;
-	uint8_t start;
-	uint8_t end;
+	gfx_SetDrawBuffer();
 	gfx_FillScreen(255);
 	CursorX = 0;
 	CursorY = 0;
 	Type = 0;
 	xa = 0;
-	exit = 0;
 	redraw = 1;
 	room = 1;
 	roomX = 1;
 	roomY = 1;
-	while (exit == 0) {
+}
+
+void editor(void) {
+	uint8_t start;
+	uint8_t end;
+	int timer = 0, timer2 = 0;
+	while (1) {
 		kb_Scan();
+		timer++;
 
-			gfx_SetColor(255);
-			gfx_FillRectangle(CursorX, CursorY, 16, 16);
-			gfx_SetColor(210);
-			gfx_FillRectangle(CursorX + 6, CursorY + 6, 4, 4);
+		if (timer > 20) {
+			timer = 0;
+			timer2 = (timer2 == 0);
+		}
+			if (timer2 == 0) {
+				gfx_SetColor(255);
+				gfx_FillRectangle(CursorX, CursorY, 16, 16);
+				gfx_SetColor(210);
+				gfx_FillRectangle(CursorX + 6, CursorY + 6, 4, 4);
+			}else{
+				gfx_Sprite(sprites[Type], CursorX, CursorY);
+			}
 
-		if (Type != 0)gfx_Sprite(sprites[Type], CursorX, CursorY);
+		if (kb_IsDown(kb_KeyStat)) {
+			while (kb_IsDown(kb_KeyStat)) {
+				kb_Scan();
+				gfx_SetColor(10);
+				gfx_FillRectangle(10, 10, 170, 30);
+				gfx_PrintStringXY("Position in Map Data:", 12, 12);
+				gfx_SetTextXY(12,22);
+				gfx_PrintInt(xa, 1);
+				gfx_BlitBuffer();
+			}
+			drawScreen();
+		}
+
+			gfx_BlitBuffer();
 
 		if (kb_IsDown(kb_KeyUp) && CursorY > 0) {
 			redraw = 1;
+			gfx_Sprite(sprites[Type], CursorX, CursorY);
 			delay(100);
 			CursorY = CursorY - 16;
 			xa -= 20 * 14;
 		}
 		if (kb_IsDown(kb_KeyDown) && CursorY < 224) {
 			redraw = 1;
+			gfx_Sprite(sprites[Type], CursorX, CursorY);
 			delay(100);
 			CursorY = CursorY + 16;
 			xa += 20 * 14;
 		}
 		if (kb_IsDown(kb_KeyLeft) && CursorX > 0) {
 			redraw = 1;
+			gfx_Sprite(sprites[Type], CursorX, CursorY);
 			delay(100);
 			CursorX = CursorX - 16;
 			xa--;
 		}
 		if (kb_IsDown(kb_KeyRight) && CursorX < 304) {
 			redraw = 1;
+			gfx_Sprite(sprites[Type], CursorX, CursorY);
 			delay(100);
 			CursorX = CursorX + 16;
 			xa++;
@@ -119,6 +156,7 @@ void start(void) {
 		
 		if (kb_IsDown(kb_Key4) && roomX > 1) {
 			redraw = 1;
+			gfx_Sprite(sprites[Type], CursorX, CursorY);
 			delay(100);
 			roomX--;
 			room -= 20;
@@ -126,6 +164,7 @@ void start(void) {
 		}
 		if (kb_IsDown(kb_Key6) && roomX < 14) {
 			redraw = 1;
+			gfx_Sprite(sprites[Type], CursorX, CursorY);
 			delay(100);
 			roomX++;
 			room += 20;
@@ -133,6 +172,7 @@ void start(void) {
 		}
 		if (kb_IsDown(kb_Key8) && roomY > 1) {
 			redraw = 1;
+			gfx_Sprite(sprites[Type], CursorX, CursorY);
 			delay(100);
 			roomY--;
 			room -= 4200;
@@ -140,30 +180,58 @@ void start(void) {
 		}
 		if (kb_IsDown(kb_Key2) && roomY < 14) {
 			redraw = 1;
+			gfx_Sprite(sprites[Type], CursorX, CursorY);
 			delay(100);
 			roomY++;
 			room += 4200;
 			xa += 4200;
 		}
-		
+/*  I wouldn't try this... It's too buggy...
+		if ((kb_IsDown(kb_KeyYequ)) && (wholeMap[xa] = 12)) {
+			gfx_FillScreen(20);
+			y = 20;
+			x = 0;
+			while (!(kb_IsDown(kb_KeyEnter))) {
+				kb_Scan();
+				if (x != y) {
+					gfx_SetColor(15);
+					gfx_PrintStringXY("House/Building Options:", 5, 5);
+					for (i = 20; i < 60; i += 20) {
+						gfx_FillRectangle(20, i, 110, 14);
+					}
+					gfx_PrintStringXY("Design a room...", 22, 22);
+					gfx_PrintStringXY("Back...", 22, 42);	
+					x = y;
+				}
+				gfx_SetColor(3);
+				gfx_Rectangle(20, y, 110, 14);
+				gfx_Rectangle(21, y + 1, 108, 12);
+				if (kb_IsDown(kb_KeyUp)) y = 20;
+				if (kb_IsDown(kb_KeyDown)) y = 40;
+				if (kb_IsDown(kb_KeyClear)) drawScreen();
+				gfx_BlitBuffer();
+			}
+				if (y = 20) {
+					scanForBuildings();
+					addRoom();
+				}
+				if (y = 40)drawScreen();
+		}
+		*/
+
 		if (kb_IsDown(kb_Key2nd)) {
 			delay(100);
 			wholeMap[xa] = Type;
 		}
 		if (kb_IsDown(kb_KeyAlpha)) {
 			delay(160);
-			Type = Type + 1;
+			gfx_Sprite(sprites[Type], CursorX, CursorY);
+			Type++;
 		}
-			if (Type > 12)Type = 0;
+			if (Type > 15)Type = 0;
 
 			if (kb_IsDown(kb_KeyClear)) {
-				exit = 1;
 				ti_CloseAll();
-				//start = ((totalRooms - 1) * 300); 
-				//If you want to copy to the same position in the first array, you can use `memcpy(&screenMap[start], &wholeMap[start], (end - start) * sizeof wholeMap[0]);`
-				//for (xb = start; xb < start + 300; xb++) {
-				//	memcpy(&screenMap[xb], &wholeMap[xb], 1);
-				//}
 				appvar = ti_Open("SrvMap00", "w");
 				ti_Write(wholeMap, sizeof(wholeMap), 1, appvar);
 				ti_SetArchiveStatus(1, appvar);
@@ -177,6 +245,7 @@ void start(void) {
 			}
 			if kb_IsDown(kb_KeyWindow) {
 				//Map Editor Tools Menu...
+				gfx_SetDrawBuffer();
 				y = 140;
 				i = y;
 				for (OldY = 0; OldY < 15; OldY++) {
@@ -192,6 +261,7 @@ void start(void) {
 				option = 0;
 				while (option == 0) {
 					kb_Scan();
+					gfx_BlitBuffer();
 					if (redraw != 0) {
 						redraw = 0;
 						/* redraw only the one button that needs it */
@@ -253,13 +323,16 @@ void start(void) {
 				drawScreen();
 			}
 
+
+		gfx_BlitBuffer();
 	}
 	gfx_End();
 
 }
 
 
-/* loading appvars… */
+
+/* loading appvarsï¿½ */
 void createVars(void) {
 	ti_var_t appvar;
 	ti_CloseAll();
@@ -268,7 +341,15 @@ void createVars(void) {
 	if (!appvar) {
 		ti_CloseAll();
 		appvar = ti_Open("SrvMap00", "w");
-		ti_Write(wholeMap, sizeof(wholeMap), 1, appvar);   //+300
+		ti_Write(wholeMap, sizeof(wholeMap), 1, appvar);
+		ti_SetArchiveStatus(1, appvar);
+		ti_CloseAll();
+		appvar = ti_Open("SMapDATA", "w");
+		ti_Write(buildings, sizeof(buildings), 1, appvar);
+		ti_SetArchiveStatus(1, appvar);
+		ti_CloseAll();
+		appvar = ti_Open("SMapBDAT", "w");
+		ti_Write(buildingData, sizeof(buildingData), 1, appvar);
 		ti_SetArchiveStatus(1, appvar);
 		ti_CloseAll();
 	}
@@ -278,6 +359,12 @@ void createVars(void) {
 		ti_CloseAll();
 		appvar = ti_Open("SrvMap00", "r");
 		ti_Read(wholeMap, ti_GetSize(appvar), 1, appvar);
+		ti_CloseAll();
+		appvar = ti_Open("SMapDATA", "r");
+		ti_Read(buildings, ti_GetSize(appvar), 1, appvar);
+		ti_CloseAll();
+		appvar = ti_Open("SMapBDAT", "r");
+		ti_Read(buildingData, ti_GetSize(appvar), 1, appvar);
 		ti_CloseAll();
 		xb = 0;
 		gfx_SetColor(255);
@@ -306,4 +393,84 @@ void input(void) {
 
 	gfx_End();
 	return;
+}
+
+void scanForBuildings() {
+	for (i = 0; i < sizeof(wholeMap); i++) {
+		if ((wholeMap[i] = 12) && (xa == i)) {
+			buildings[0] = buildings[0] + 1;
+			buildings[buildings[0]] = i;
+		}
+	}
+}
+
+void addRoom(void) {
+	int xx, yy, posB;
+	x = 0;
+	y = 0;
+	pos = buildings[0] * 300;
+	TypeB = 0;
+	redraw = 1;
+	while (!(kb_IsDown(kb_KeyClear))) {
+		kb_Scan();
+		if (redraw == 1) {
+			posB = buildings[0];
+			for (xx = 0; xx < 20; xx++) {
+				for (yy = 0; yy < 15; yy++) {
+					gfx_Sprite(sprites[buildingData[posB * 300]], xx * 16, yy * 16);
+				}
+			}
+		}
+
+
+			gfx_SetColor(255);
+			gfx_FillRectangle(x, y, 16, 16);
+			gfx_SetColor(210);
+			gfx_FillRectangle(x + 6, y + 6, 4, 4);
+			
+
+		if (Type < 15)gfx_Sprite(sprites[Type], x, y);
+
+		if (kb_IsDown(kb_KeyUp) && y > 0) {
+			redraw = 1;
+			delay(100);
+			y -= 16;
+			pos -= 20 * 300;
+		}
+		if (kb_IsDown(kb_KeyDown) && y < 224) {
+			redraw = 1;
+			delay(100);
+			y += 16;
+			pos += 20 * 300;
+		}
+		if (kb_IsDown(kb_KeyLeft) && x > 0) {
+			redraw = 1;
+			delay(100);
+			x -= 16;
+			pos--;
+		}
+		if (kb_IsDown(kb_KeyRight) && x < 304) {
+			redraw = 1;
+			delay(100);
+			x += 16;
+			pos++;
+		}
+		if (kb_IsDown(kb_Key2nd)) {
+			redraw = 1;
+			buildingData[pos] = Type;
+		}
+		if (kb_IsDown(kb_KeyAlpha)) {
+			delay(160);
+			Type++;
+		}
+		
+		if (Type > 14)Type = 0;
+
+	gfx_BlitBuffer();
+
+	}
+	ti_Delete("SrvMap00");
+	ti_Delete("SMapBDAT");
+	createVars();
+	start();
 }
